@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação de Doação de Sangue</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #14225f;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #580505;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #12c73a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .pode-doar {
+            color: #27ae60;
+            background-color: #e8f5e9;
+        }
+
+        .nao-pode-doar {
+            color: #c0392b;
+            background-color: #f9ebea;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Você pode doar sangue?</h2>
+
+        <form id="formDoacao">
+            <label>Idade:</label>
+            <input type="number" id="idade" min="0" required>
+
+            <label>Peso (kg):</label>
+            <input type="number" id="peso" min="0" required>
+
+            <label>Tipo Sanguíneo:</label>
+            <select id="sangue">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="O">O</option>
+                <option value="AB">AB</option>
+            </select>
+
+            <label>Está em jejum?</label>
+            <select id="jejum">
+                <option value="sim">Sim</option>
+                <option value="nao">Não</option>
+            </select>
+
+            <label>Consumo de álcool recente?</label>
+            <select id="alcool">
+                <option value="sim">Sim</option>
+                <option value="nao">Não</option>
+            </select>
+
+            <label>Está grávida?</label>
+            <select id="gravida">
+                <option value="sim">Sim</option>
+                <option value="nao">Não</option>
+            </select>
+
+            <label>Tem alguma doença sexualmente transmissível?</label>
+            <select id="doencaSexual">
+                <option value="sim">Sim</option>
+                <option value="nao">Não</option>
+            </select>
+
+            <label>Uso de drogas?</label>
+            <select id="usodedrogas">
+                <option value="sim">Sim</option>
+                <option value="nao">Não</option>
+            </select>
+
+            <button type="button" onclick="verificarDoacao()">Verificar</button>
+        </form>
+
+        <p id="resultado"></p>
+    </div>
+
+    <script>
+        function verificarDoacao() {
+            var idade = parseInt(document.getElementById("idade").value);
+            var peso = parseFloat(document.getElementById("peso").value);
+            var sangue = document.getElementById("sangue").value;
+            var jejum = document.getElementById("jejum").value;
+            var alcool = document.getElementById("alcool").value;
+            var gravida = document.getElementById("gravida").value;
+            var doencaSexual = document.getElementById("doencaSexual").value;
+            var usodedrogas = document.getElementById("usodedrogas").value;
+
+            var podeDoar = true;
+            var mensagem = "";
+
+            if (idade < 16) {
+                podeDoar = false;
+                mensagem += "Idade inferior a 16 anos. ";
+            }
+            if (peso < 50) {
+                podeDoar = false;
+                mensagem += "Peso inferior a 50kg. ";
+            }
+            if (jejum === "sim") {
+                podeDoar = false;
+                mensagem += "Não pode estar em jejum. ";
+            }
+            if (alcool === "sim") {
+                podeDoar = false;
+                mensagem += "Consumo de álcool recente. ";
+            }
+            if (gravida === "sim") {
+                podeDoar = false;
+                mensagem += "Gestantes não podem doar. ";
+            }
+            if (doencaSexual === "sim") {
+                podeDoar = false;
+                mensagem += "Doença sexualmente transmissível detectada. ";
+            }
+            if (usodedrogas === "sim") {
+                podeDoar = false;
+                mensagem += "Uso de drogas impede a doação. ";
+            }
+
+            var resultado = document.getElementById("resultado");
+            if (podeDoar) {
+                resultado.textContent = "Você pode doar sangue!";
+                resultado.className = "pode-doar";
+            } else {
+                resultado.textContent = "Você não pode doar sangue. " + mensagem;
+                resultado.className = "nao-pode-doar";
+            }
+        }
+    </script>
+
+</body>
+</html>
