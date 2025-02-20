@@ -5,7 +5,8 @@ if (idade < 16) {
 } else {
     console.log('Pode doar');
 }
-var sangue = "A"; 
+var sangue = "A";  // Variável para tipo Sanguineo
+
 if (sangue === "A") { 
     console.log('Pode doar');
 } else {
@@ -37,7 +38,7 @@ if (kg < 50) {
         else
         console.log('nao pode doar');
 
-    var doencaSexual = "nao"; // Nome da variável corrigido
+    var doencaSexual = "nao"; 
 
 if (doencaSexual === "sim") {
     console.log('Não pode doar');
